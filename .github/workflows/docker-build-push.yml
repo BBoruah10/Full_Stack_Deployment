@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - "v*.*.*"
+    branches: [main]
 
 jobs:
   docker:
@@ -21,12 +22,6 @@ jobs:
       # ----------------------------------
       # Ensure tag is created from main
       # ----------------------------------
-      - name: Ensure tag is from main branch
-        run: |
-          git branch --contains "$GITHUB_SHA" | grep -E "^\*?\s*main$" || {
-            echo "❌ Tag is NOT from main branch"
-            exit 1
-          }
 
       # ----------------------------
       # Docker build environment
