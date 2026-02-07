@@ -40,7 +40,7 @@ function App() {
     loadUsers();
   };
 
-  // 🔹 Delete user
+  // 🔹 Delete userss
   const handleDelete = async (id) => {
     await fetch(`/users/${id}`, {         // ✅ FIX
       method: "DELETE",
