@@ -14,7 +14,7 @@ services:
       - "5432:5432"
 
   backend:
-    build: ./backend
+    image: bhaskarboruah10/fullstack-backend:1.0.2
     container_name: spring-backend
     ports:
       - "8080:8080"
@@ -26,7 +26,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
 
   frontend:
-    build: ./frontend
+    image: bhaskarboruah10/fullstack-frontend:1.0.2 
     container_name: react-frontend
     ports:
       - "3000:80"
