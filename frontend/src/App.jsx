@@ -10,7 +10,7 @@ function App() {
 
   // 🔹 Fetch all users
   const loadUsers = async () => {
-    const res = await fetch("http://localhost:8080/users");
+    const res = await fetch("/users");   // ✅ FIX
     const data = await res.json();
     setUsers(data);
   };
@@ -28,7 +28,7 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await fetch("http://localhost:8080/users", {
+    await fetch("/users", {              // ✅ FIX
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -42,7 +42,7 @@ function App() {
 
   // 🔹 Delete user
   const handleDelete = async (id) => {
-    await fetch(`http://localhost:8080/users/${id}`, {
+    await fetch(`/users/${id}`, {         // ✅ FIX
       method: "DELETE",
     });
 
@@ -53,33 +53,14 @@ function App() {
     <div style={{ padding: "40px" }}>
       <h2>User Management</h2>
 
-      {/* 🔹 Add User Form */}
       <form onSubmit={handleSubmit}>
-        <input
-          name="name"
-          placeholder="Name"
-          value={form.name}
-          onChange={handleChange}
-          required
-        />
+        <input name="name" placeholder="Name" value={form.name} onChange={handleChange} required />
         <br /><br />
 
-        <input
-          name="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={handleChange}
-          required
-        />
+        <input name="email" placeholder="Email" value={form.email} onChange={handleChange} required />
         <br /><br />
 
-        <input
-          name="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-          required
-        />
+        <input name="password" placeholder="Password" value={form.password} onChange={handleChange} required />
         <br /><br />
 
         <button type="submit">Add User</button>
@@ -87,7 +68,6 @@ function App() {
 
       <hr />
 
-      {/* 🔹 View All Users */}
       <h3>All Users</h3>
 
       <table border="1" cellPadding="10">
@@ -107,9 +87,7 @@ function App() {
               <td>{u.name}</td>
               <td>{u.email}</td>
               <td>
-                <button onClick={() => handleDelete(u.id)}>
-                  Delete
-                </button>
+                <button onClick={() => handleDelete(u.id)}>Delete</button>
               </td>
             </tr>
           ))}
