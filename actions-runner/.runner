@@ -1,0 +1,11 @@
+﻿{
+  "agentId": 2,
+  "agentName": "BHASKARBORUAH",
+  "poolId": 1,
+  "poolName": "Default",
+  "serverUrl": "https://pipelinesghubeus9.actions.githubusercontent.com/D4LFnRHmJUIAmpG9PLHVqkAj9xcNnPw0rhqpoyQWQ6qE3cEXvX/",
+  "gitHubUrl": "https://github.com/BBoruah10/Full_Stack_Deployment",
+  "workFolder": "_work",
+  "useV2Flow": true,
+  "serverUrlV2": "https://broker.actions.githubusercontent.com/"
+}
