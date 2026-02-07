@@ -1,0 +1,74 @@
+name: Deploy to Kubernetes (Local)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      # -----------------------------
+      # 1. Checkout repository
+      # -----------------------------
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # -----------------------------
+      # 2. Verify Kubernetes access
+      # -----------------------------
+      - name: Verify cluster access
+        run: |
+          kubectl version --client
+          kubectl config current-context
+          kubectl get nodes
+
+      # -----------------------------
+      # 3. Apply ConfigMaps & Secrets
+      # -----------------------------
+      - name: Apply ConfigMaps and Secrets
+        run: |
+          kubectl apply -f k8s/configmap.yaml
+          kubectl apply -f k8s/secret.yaml
+
+      # -----------------------------
+      # 4. Deploy PostgreSQL
+      # -----------------------------
+      - name: Deploy PostgreSQL
+        run: |
+          kubectl apply -f k8s/postgres/
+          kubectl rollout status statefulset/postgres
+
+      # -----------------------------
+      # 5. Deploy Backend
+      # -----------------------------
+      - name: Deploy Backend
+        run: |
+          kubectl apply -f k8s/backend/
+          kubectl rollout status deployment/backend
+
+      # -----------------------------
+      # 6. Deploy Frontend
+      # -----------------------------
+      - name: Deploy Frontend
+        run: |
+          kubectl apply -f k8s/frontend/
+          kubectl rollout status deployment/frontend
+
+      # -----------------------------
+      # 7. Apply Ingress (last)
+      # -----------------------------
+      - name: Apply Ingress
+        run: |
+          kubectl apply -f k8s/ingress.yaml
+
+      # -----------------------------
+      # 8. Post-deploy verification
+      # -----------------------------
+      - name: Verify running resources
+        run: |
+          kubectl get pods
+          kubectl get svc
+          kubectl get ingress
